@@ -69,6 +69,7 @@ describe "invoices endpoints" do
       invoice = JSON.parse(response.body)
 
       expect(response).to be_success
+      expect(invoice.class).to eq(Hash)
     end
   end
 end
