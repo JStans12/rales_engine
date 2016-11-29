@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       end
       resources :transactions, only: [:index, :show] do
         scope module: 'transactions' do
-          get "/invoice", to: "invoice#show"
+          get "/invoice", to: "invoices#show"
         end
       end
       resources :customers, only: [:index, :show] do
