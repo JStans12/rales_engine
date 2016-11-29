@@ -50,7 +50,12 @@ Rails.application.routes.draw do
           get "merchant", to: "merchants#show"
         end
       end
-      resources :invoice_items, only: [:index, :show]
+      resources :invoice_items, only: [:index, :show] do
+        scope module: 'invoice_items' do
+          get "invoice", to: "invoices#show"
+          get "item", to: "items#show"
+        end
+      end
     end
   end
 end
