@@ -67,6 +67,7 @@ describe "items endpoints" do
       item = JSON.parse(response.body)
 
       expect(response).to be_success
+      expect(item.class).to eq(Hash)
     end
   end
 end
