@@ -10,6 +10,6 @@ class Api::V1::InvoiceItems::FindController < ApplicationController
   private
 
   def invoice_item_params
-    params.permit(:quantity, :unit_price, :invoice_id, :item_id)
+    params.permit(:id, :quantity, :unit_price, :invoice_id, :item_id)
   end
 end
