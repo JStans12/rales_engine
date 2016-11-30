@@ -28,6 +28,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'active_model_serializers', '~> 0.10.0'
+  gem 'simplecov', require: false
 end
 
 group :development do
