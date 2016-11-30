@@ -27,6 +27,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'shoulda-matchers', '~> 3.1'
+  gem 'active_model_serializers', '~> 0.10.0'
 end
 
 group :development do
