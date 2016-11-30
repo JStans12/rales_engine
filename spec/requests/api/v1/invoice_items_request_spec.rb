@@ -38,7 +38,7 @@ describe "invice items endpoints" do
       invoice_item = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(invoice_item["unit_price"]).to eq(30)
+      expect(invoice_item["unit_price"]).to eq("0.3")
     end
   end
 
