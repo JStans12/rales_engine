@@ -1,4 +1,6 @@
 class Invoice < ApplicationRecord
+  default_scope { order(id: :desc) }
+
   belongs_to :customer
   belongs_to :merchant
   has_many :transactions
