@@ -4,7 +4,7 @@ describe "merchants relationship endpoints" do
   context "GET /merchants/:id/items" do
     it "returns a collection of associated items" do
       merchant = create(:merchant)
-      3.times {merchant.items.create}
+      3.times {merchant.items.create(unit_price: 8)}
 
       get "/api/v1/merchants/#{merchant.id}/items"
 
