@@ -21,7 +21,6 @@ Rails.application.routes.draw do
         get "/random", to: "random#show"
         get "/most_revenue", to: "total_revenue#index"
         get "/most_items", to: "most_items#index"
-        get "/best_day", to: "best_day#show"
       end
       namespace :invoice_items do
         get "/find", to: "find#show"
@@ -71,6 +70,7 @@ Rails.application.routes.draw do
         scope module: 'items' do
           get "invoice_items", to: "invoice_items#index"
           get "merchant", to: "merchants#show"
+          get "/best_day", to: "best_day#show"
         end
       end
       resources :invoice_items, only: [:index, :show] do
