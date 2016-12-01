@@ -8,8 +8,20 @@ class Item < ApplicationRecord
   def self.total_revenue(quantity)
     select('items.*,' 'sum(invoice_items.unit_price*invoice_items.quantity) AS total')
     .joins(invoices: [:invoice_items, :transactions])
-    .where(transactions: {result: 'success'})
-    .group('id').unscope(:order)
-    .order('total DESC').limit(quantity)
+    .merge(Transaction.successful)
+    .group('id')
+    .unscope(:order)
+    .order('total DESC')
+    .limit(quantity)
+  end
+
+  def self.most_items_sold(quantity)
+    select('items.*, sum(invoice_items.quantity) AS total_sold')
+      .joins(invoices: [:transactions])
+      .merge(Transaction.successful)
+      .group('id')
+      .unscope(:order)
+      .order('total_sold DESC')
+      .limit(quantity)
   end
 end

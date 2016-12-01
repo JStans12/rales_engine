@@ -23,8 +23,11 @@ class Merchant < ApplicationRecord
   def self.total_revenue_all(quantity)
     select('id', 'name', 'sum(invoice_items.unit_price*invoice_items.quantity) AS total')
     .joins(invoices: [:transactions, :invoice_items])
-    .where(transactions: {result: 'success'}).group('id')
-    .unscope(:order).order('total DESC').limit(quantity)
+    .merge(Transaction.successful)
+    .group('id')
+    .unscope(:order)
+    .order('total DESC')
+    .limit(quantity)
   end
 
   def self.favorite_merchant(customer_id)
@@ -37,7 +40,7 @@ class Merchant < ApplicationRecord
   def self.most_items(quantity)
     select('merchants.id, merchants.name, sum(invoice_items.quantity) AS total_items_sold')
       .joins(invoices: [:transactions, :invoice_items])
-      .where("transactions.result = 'success'")
+      .merge(Transaction.successful)
       .group('id')
       .unscope(:order)
       .order('total_items_sold DESC')
