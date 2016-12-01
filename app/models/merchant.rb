@@ -19,4 +19,14 @@ class Merchant < ApplicationRecord
     .group('merchants.id').count
     .max_by { |k,v| v }.first
   end
+
+  def self.most_items(quantity)
+    select('merchants.id, merchants.name, sum(invoice_items.quantity) AS total_items_sold')
+      .joins(invoices: [:transactions, :invoice_items])
+      .where("transactions.result = 'success'")
+      .group('id')
+      .unscope(:order)
+      .order('total_items_sold DESC')
+      .limit(quantity)
+  end
 end
