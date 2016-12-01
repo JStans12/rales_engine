@@ -18,6 +18,7 @@ class Merchant < ApplicationRecord
     .joins(invoices: [:transactions, :invoice_items])
     .where(transactions: {result: 'success'}).group('id')
     .unscope(:order).order('total DESC').limit(quantity)
+  end
 
   def self.favorite_merchant(customer_id)
     joins(:invoices, :transactions)
