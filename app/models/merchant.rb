@@ -7,10 +7,17 @@ class Merchant < ApplicationRecord
   has_many :transactions, through: :invoices
   has_many :invoice_items, through: :invoices
 
-  def total_revenue
-    invoices.joins(:invoice_items, :transactions)
-      .merge(Transaction.successful)
-      .sum("invoice_items.unit_price*invoice_items.quantity")
+  def total_revenue(date)
+    if date
+      invoices.joins(:invoice_items, :transactions)
+        .merge(Transaction.successful)
+        .where(invoices: {created_at: date})
+        .sum("invoice_items.unit_price*invoice_items.quantity")
+    else
+      invoices.joins(:invoice_items, :transactions)
+        .merge(Transaction.successful)
+        .sum("invoice_items.unit_price*invoice_items.quantity")
+      end
   end
 
   def self.total_revenue_all(quantity)
