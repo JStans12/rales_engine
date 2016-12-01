@@ -33,8 +33,10 @@ class Merchant < ApplicationRecord
   def self.favorite_merchant(customer_id)
     joins(:invoices, :transactions)
     .where(invoices: {customer_id: customer_id}, transactions: {result: 'success'})
-    .group('merchants.id').count
-    .max_by { |k,v| v }.first
+    .group('merchants.id')
+    .unscope(:order)
+    .order('count(merchants.id) DESC')
+    .first
   end
 
   def self.most_items(quantity)
