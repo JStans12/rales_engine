@@ -26,7 +26,7 @@ class Item < ApplicationRecord
   end
 
   def best_day
-    invoices.select('invoices.created_at, count(invoices.created_at) AS day')
+    invoices.select('invoices.*, count(invoices.created_at) AS day')
     .joins(:transactions, :invoice_items)
     .merge(Transaction.successful)
     .group('id')
