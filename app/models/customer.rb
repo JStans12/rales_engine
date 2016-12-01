@@ -13,4 +13,11 @@ class Customer < ApplicationRecord
     .order('count(customers.id) DESC')
     .first
   end
+
+  def self.customers_with_pending_invoices(merchant_id)
+    m = Merchant.find(merchant_id)
+    find((m.invoices - m.invoices.joins(:transactions)
+    .where("transactions.result = 'success'"))
+    .pluck(:customer_id))
+  end
 end
