@@ -13,6 +13,12 @@ class Merchant < ApplicationRecord
       .sum("invoice_items.unit_price*invoice_items.quantity")
   end
 
+  def self.total_revenue_all(quantity)
+    select('id', 'name', 'sum(invoice_items.unit_price*invoice_items.quantity) AS total')
+    .joins(invoices: [:transactions, :invoice_items])
+    .where(transactions: {result: 'success'}).group('id')
+    .unscope(:order).order('total DESC').limit(quantity)
+
   def self.favorite_merchant(customer_id)
     joins(:invoices, :transactions)
     .where(invoices: {customer_id: customer_id}, transactions: {result: 'success'})
