@@ -18,7 +18,6 @@ describe "model methods" do
       expect(response).to be_success
       expect(items.count).to eq(2)
       expect(items).to_not include(item_2.id)
-
     end
   end
 end
